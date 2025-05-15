@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './schemas/user.schema';
-import { JwtStrategy } from './strategies/jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventSchema } from './schemas/event.schema';
 import { RewardSchema } from './schemas/reward.schema';
 
 @Module({
@@ -20,22 +18,10 @@ import { RewardSchema } from './schemas/reward.schema';
       inject: [ConfigService],
     }),
 
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET_KEY'),
-        signOptions: { expiresIn: '1h' },
-      }),
-      inject: [ConfigService],
-    }),
-
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'Event', schema: EventSchema}]),
     MongooseModule.forFeature([{ name: 'Reward', schema: RewardSchema}])
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    JwtStrategy,
-  ],
+  providers: [AppService],
 })
-export class AppModule {} 
+export class AppModule {}

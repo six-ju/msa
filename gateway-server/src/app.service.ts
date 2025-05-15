@@ -38,10 +38,37 @@ export class AppService {
     }
   }
 
-  // 회원가입
-  async event(accessToken: string): Promise<{ message: string }> {
+  // 이벤트 생성
+  async createEvent(name:string, reward:number, status:boolean, startAt:Date, endAt:Date, accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.get('http://localhost:8001/event', {
+      const event = {
+        name,
+        reward,
+        status,
+        startAt,
+        endAt
+      } 
+
+      const result = await axios.post('http://localhost:8001/admin/event',event, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 보상 생성
+  async createReward(name:string, amount: number, info:string, accessToken: string): Promise<{ message: string }> {
+    try {
+      const reward = {
+        name, amount, info
+      } 
+
+      const result = await axios.post('http://localhost:8001/admin/reward',reward, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

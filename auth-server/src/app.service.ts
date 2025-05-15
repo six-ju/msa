@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
+import axios from 'axios';
+import { Reward } from './schemas/reward.schema';
 
 @Injectable()
 export class AppService {
@@ -51,5 +53,28 @@ export class AppService {
       }
     }
     return await this.userModel.create({ ID, PW, role, loginAt: new Date() });
+  }
+
+  // 이벤트 생성
+  async createEvent(name:string, reward:number, status:boolean, startAt:Date, endAt:Date, ID:string): Promise<any>{
+    const event = {
+      name,
+      reward,
+      status,
+      startAt,
+      endAt,
+      ID
+    } 
+  
+    return await axios.post('http://localhost:8002/admin/event', event)
+  }
+
+  // 보상 생성
+  async createReward(name:string, amount: number, info:string, ID:string): Promise<any>{
+    const reward = {
+      name, amount, info, ID
+    } 
+  
+    return await axios.post('http://localhost:8002/admin/reward', reward)
   }
 }

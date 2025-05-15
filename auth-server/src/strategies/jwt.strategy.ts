@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(configService: ConfigService) {
     const secret = configService.get<string>('JWT_SECRET_KEY');
-
+    console.log('🔥 JwtStrategy 생성자 호출됨'); 
     if (!secret) {
       throw new Error('JWT키가 설정되지 않았습니다.');
     }
@@ -19,6 +19,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: any) {
-    return { ID: payload.ID, role: payload.role };
+        return { ID: payload.ID, role: payload.role };
   }
 }

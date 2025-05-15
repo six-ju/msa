@@ -1,16 +1,10 @@
-import { Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { USER_ROLES } from './config/variables';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get('/')
-  @Render('index')
-  main() {
-    return;
-  }
 
   // 로그인
   @Post('/login')
@@ -60,15 +54,52 @@ export class AppController {
     }
   }
 
-  @Get('/event')
-  async event(@Req() req, @Res() res) {
+  // 이벤트 생성
+  @Post('/admin/event')
+  async createEvent(@Body() body, @Req() req, @Res() res) {
     try {
-      const { accessToken } = req.cookies;
-      const result = await this.appService.event(accessToken);
+      const { name, reward, status, startAt, endAt } = body;
+
+      if (!name || !reward || !status || !startAt || !endAt) {
+        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
+      }
+
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.createEvent(name, reward, status, startAt, endAt, accessToken);
 
       return res.status(200).json(result);
     } catch (error) {
-      return res.status(401).json({ message: error.response.data.message });
+      console.log(error)
+      return res.status(400).json({ message: error.response?.data.message || '이벤트 등록 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 보상 생성
+  @Post('/admin/reward')
+  async createReward(@Body() body, @Req() req, @Res() res) {
+    try {
+      const { name, amount, info } = body;
+
+      if (!name || !amount || !info ) {
+        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
+      }
+
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.createReward( name, amount, info, accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 등록 중 오류가 발생했습니다.' });
     }
   }
 }

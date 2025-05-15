@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { eventProxy } from './utill/proxy.middleware';
 
 const cookieParser = require('cookie-parser');
 
