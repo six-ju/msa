@@ -6,10 +6,13 @@ export type EventDocument = Event & Document;
 @Schema()
 export class Event {
   @Prop({ required: true })
+  number: number;
+
+  @Prop({ required: true })
   name: string;
 
   @Prop()
-  reward: number;
+  reward: Array<number>;
 
   @Prop({ default: new Date()})
   startAt: Date;
@@ -19,6 +22,9 @@ export class Event {
 
   @Prop({ default: false})
   status: boolean;
+
+  @Prop({ default: false})
+  eventType: string;
 
   @Prop({default: Date.now})
   createdAt: Date;

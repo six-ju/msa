@@ -38,18 +38,98 @@ export class AppService {
     }
   }
 
+  // 이벤트 조회(USER)
+  async getEventForUser(accessToken: string): Promise<any> {
+    try {
+      const result = await axios.get('http://localhost:8001/event',{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 이벤트 조회(ADMIN)
+  async getEvent(accessToken: string): Promise<any> {
+    try {
+      const result = await axios.get('http://localhost:8001/admin/event',{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // 이벤트 생성
-  async createEvent(name:string, reward:number, status:boolean, startAt:Date, endAt:Date, accessToken: string): Promise<{ message: string }> {
+  async createEvent(name:string, reward:number, status:boolean, eventType:string, startAt:Date, endAt:Date, accessToken: string): Promise<{ message: string }> {
     try {
       const event = {
         name,
         reward,
         status,
+        eventType,
         startAt,
         endAt
       } 
 
       const result = await axios.post('http://localhost:8001/admin/event',event, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 이벤트 보상 추가
+  async eventAddReward(eventNum:number, reward:number, accessToken: string): Promise<{ message: string }> {
+    try {
+      const info = {
+        eventNum,
+        reward
+      }
+      const result = await axios.patch('http://localhost:8001/admin/event',info, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 보상 조회(USER)
+  async getRewardForUser(accessToken: string): Promise<{ message: string }> {
+    try {
+      const result = await axios.get('http://localhost:8001/reward', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // 보상 조회(ADMIN)
+  async getReward(accessToken: string): Promise<{ message: string }> {
+    try {
+      const result = await axios.get('http://localhost:8001/admin/reward', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -69,6 +149,21 @@ export class AppService {
       } 
 
       const result = await axios.post('http://localhost:8001/admin/reward',reward, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // 보상 요청
+  async requestReward(eventNum: number, accessToken: string): Promise<{ message: string }> {
+    try {
+      const result = await axios.post('http://localhost:8001/request',eventNum,{
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

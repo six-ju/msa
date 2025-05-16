@@ -19,6 +19,9 @@ export class User {
 
   @Prop({ default: 0 })
   recommend: number;
+
+  @Prop({ default: 0 })
+  money: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

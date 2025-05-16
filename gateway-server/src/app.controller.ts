@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Render, Req, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 import { USER_ROLES } from './config/variables';
 
@@ -54,28 +54,123 @@ export class AppController {
     }
   }
 
-  // 이벤트 생성
-  @Post('/admin/event')
-  async createEvent(@Body() body, @Req() req, @Res() res) {
+  // 이벤트 조회(USER)
+  @Get('/event')
+  async getEventForUser(@Req() req, @Res() res) {
     try {
-      const { name, reward, status, startAt, endAt } = body;
-
-      if (!name || !reward || !status || !startAt || !endAt) {
-        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
-      }
-
       const { accessToken } = req.cookies; 
 
       if(!accessToken){
         return res.status(401).json({ message: "로그인 먼저 해주세요."})
       }
 
-      const result = await this.appService.createEvent(name, reward, status, startAt, endAt, accessToken);
+      const result = await this.appService.getEventForUser(accessToken);
 
       return res.status(200).json(result);
     } catch (error) {
-      console.log(error)
+      return res.status(400).json({ message: error.response?.data.message || '이벤트 조회 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 이벤트 조회(ADMIN)
+  @Get('/admin/event')
+  async getEvent(@Req() req, @Res() res) {
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.getEvent(accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '이벤트 조회 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 이벤트 생성
+  @Post('/admin/event')
+  async createEvent(@Body() body, @Req() req, @Res() res) {
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const { name, reward, status, eventType, startAt, endAt } = body;
+
+      if (!name || !reward || !status || !startAt || !endAt) {
+        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
+      }
+
+      const result = await this.appService.createEvent(name, reward, status, eventType, startAt, endAt, accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
       return res.status(400).json({ message: error.response?.data.message || '이벤트 등록 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 이벤트 보상 추가
+  @Patch('/admin/event')
+  async eventAddReward(@Body() body, @Req() req, @Res() res) {
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const { eventNum, reward } = body;
+
+      if (!eventNum || !reward) {
+        return res.status(400).json({message: '정보를 입력해주세요.'});
+      }
+
+      const result = await this.appService.eventAddReward(eventNum, reward, accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 추가 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 보상 조회(USER)
+  @Get('/reward')
+  async getRewardForUser(@Req() req, @Res() res) {
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.getRewardForUser(accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 조회 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 보상 조회(ADMIN)
+  @Get('/admin/reward')
+  async getReward(@Req() req, @Res() res) {
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.getReward(accessToken);
+
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 조회 중 오류가 발생했습니다.' });
     }
   }
 
@@ -83,16 +178,16 @@ export class AppController {
   @Post('/admin/reward')
   async createReward(@Body() body, @Req() req, @Res() res) {
     try {
-      const { name, amount, info } = body;
-
-      if (!name || !amount || !info ) {
-        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
-      }
-
       const { accessToken } = req.cookies; 
 
       if(!accessToken){
         return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const { name, amount, info } = body;
+
+      if (!name || !amount || !info ) {
+        return res.status(400).json({message: '모든 정보를 입력해주세요.'});
       }
 
       const result = await this.appService.createReward( name, amount, info, accessToken);
@@ -100,6 +195,30 @@ export class AppController {
       return res.status(200).json(result);
     } catch (error) {
       return res.status(400).json({ message: error.response?.data.message || '보상 등록 중 오류가 발생했습니다.' });
+    }
+  }
+
+  // 보상 요청
+  @Post('/request')
+  async requestReward(@Body() body, @Req() req, @Res() res){
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const { eventNum } = body;
+
+      if (!eventNum) {
+        return res.status(400).json({message: '이벤트 번호를 입력해주세요.'})
+      }
+
+      const result = await this.appService.requestReward(eventNum, accessToken);
+
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(400).json({message: error.response || '보상 요청 중 에러가 발생했습니다.'})
     }
   }
 }

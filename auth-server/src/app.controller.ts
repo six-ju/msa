@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
   Post,
   Req,
   Res,
@@ -58,6 +59,33 @@ export class AppController {
     }
   }
 
+  // 이벤트 조회(USER)
+  @UseGuards(JwtAuthGuard)
+  @Get('/event')
+  async getEventForUser(@Res() res) {
+    try {
+      const result = await this.appService.getEventForUser();
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message ||'이벤트 조회 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 이벤트 조회(ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'OPERATOR')
+  @Get('/admin/event')
+  async getEvent(@Res() res) {
+    try {
+      const result = await this.appService.getEvent();
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message ||'이벤트 조회 중 에러가 발생했습니다.' });
+    }
+  }
+
   // 이벤트 생성
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'OPERATOR')
@@ -65,13 +93,57 @@ export class AppController {
   async createEvent(@Body() body, @Req() req, @Res() res) {
     try {
       const { ID } = req.user;
-      const { name, reward, status, startAt, endAt } = body;
+      const { name, reward, status, eventType, startAt, endAt } = body;
 
-      await this.appService.createEvent(name, reward, status, startAt, endAt, ID);
+      await this.appService.createEvent(name, reward, status, eventType, startAt, endAt, ID);
       
       return res.status(200).json({message:'이벤트 생성 완료'})
     } catch (error) {
-      return res.status(400).json({ message: error.response?.data.message ||'아직 미정' });
+      return res.status(400).json({ message: error.response?.data.message ||'이벤트 생성 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 이벤트 보상 추가
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'OPERATOR')
+  @Patch('/admin/event')
+  async eventAddReward(@Body() body, @Req() req, @Res() res) {
+    try {
+      const { ID } = req.user;
+      const { eventNum, reward } = body;
+
+      await this.appService.eventAddReward(eventNum, reward, ID);
+      
+      return res.status(200).json({message:'보상 추가 완료'})
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message ||'보상 추가 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 보상 조회(USER)
+  @UseGuards(JwtAuthGuard)
+  @Get('/reward')
+  async getRewardForUser(@Res() res) {
+    try {
+      const result = await this.appService.getRewardForUser();
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 조회 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 보상 조회(ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'OPERATOR')
+  @Get('/admin/reward')
+  async getReward(@Res() res) {
+    try {
+      const result = await this.appService.getReward();
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 조회 중 에러가 발생했습니다.' });
     }
   }
 
@@ -87,8 +159,22 @@ export class AppController {
 
       return res.status(200).json({message:'보상 생성 완료'})
     } catch (error) {
-      console.log(error)
       return res.status(400).json({ message: error.response?.data.message || '보상 생성 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 보상 요청
+  @UseGuards(JwtAuthGuard)
+  @Post('/request')
+  async requestReward(@Body() body, @Req() req, @Res() res) {
+    try {
+      const { ID } = req.user;
+      const { eventNum } = body;
+      await this.appService.requestReward(eventNum, ID);
+
+      return res.status(200).json({message:'보상 받기 완료'})
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 요청 중 에러가 발생했습니다.' });
     }
   }
 }

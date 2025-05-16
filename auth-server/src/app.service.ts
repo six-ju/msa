@@ -55,18 +55,50 @@ export class AppService {
     return await this.userModel.create({ ID, PW, role, loginAt: new Date() });
   }
 
+  // 이벤트 조회(USER)
+  async getEventForUser(): Promise<any>{
+    return await axios.get('http://localhost:8002/event')
+  }
+
+  // 이벤트 조회(ADMIN)
+  async getEvent(): Promise<any>{
+    return await axios.get('http://localhost:8002/admin/event')
+  }
+
   // 이벤트 생성
-  async createEvent(name:string, reward:number, status:boolean, startAt:Date, endAt:Date, ID:string): Promise<any>{
+  async createEvent(name:string, reward:number, status:boolean, eventType:string, startAt:Date, endAt:Date, ID:string): Promise<any>{
     const event = {
       name,
       reward,
       status,
+      eventType,
       startAt,
       endAt,
       ID
     } 
   
     return await axios.post('http://localhost:8002/admin/event', event)
+  }
+
+  // 이벤트 보상 추가
+  async eventAddReward(eventNum:number, reward:number, ID:string): Promise<any>{
+    const event = {
+      eventNum,
+      reward,
+      ID
+    } 
+  
+    return await axios.patch('http://localhost:8002/admin/event', event)
+  }
+
+  // 보상 조회(USER)
+  async getRewardForUser(): Promise<any>{  
+    return await axios.get('http://localhost:8002/reward')
+  }
+
+  // 보상 조회(ADMIN)
+  async getReward(): Promise<any>{  
+    return await axios.get('http://localhost:8002/admin/reward')
   }
 
   // 보상 생성
@@ -76,5 +108,14 @@ export class AppService {
     } 
   
     return await axios.post('http://localhost:8002/admin/reward', reward)
+  }
+
+  // 보상 요청
+  async requestReward(eventNum:number, ID:string): Promise<any>{
+    const reward = {
+      eventNum, ID
+    } 
+  
+    return await axios.post('http://localhost:8002/admin/request', reward)
   }
 }

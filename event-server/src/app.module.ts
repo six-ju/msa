@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventSchema } from './schemas/event.schema';
 import { RewardSchema } from './schemas/reward.schema';
+import { HistorySchema } from './schemas/History.schema';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { RewardSchema } from './schemas/reward.schema';
     }),
 
     MongooseModule.forFeature([{ name: 'Event', schema: EventSchema}]),
-    MongooseModule.forFeature([{ name: 'Reward', schema: RewardSchema}])
+    MongooseModule.forFeature([{ name: 'Reward', schema: RewardSchema}]),
+    MongooseModule.forFeature([{ name: 'History', schema: HistorySchema}]),
   ],
   controllers: [AppController],
   providers: [AppService],
