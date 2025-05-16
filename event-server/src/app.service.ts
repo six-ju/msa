@@ -174,13 +174,11 @@ export class AppService {
     // 이벤트 존재 체크
     const eventCheck = await this.eventModel.findOne({number: eventNum});
     if(!eventCheck){
-      await this.historyModal.create({userId: ID, eventNum, remark:'해당 이벤트가 존재하지 않습니다.', status: RewardStatus.Failed});
       throw new HttpException('해당 이벤트가 존재하지 않습니다.', HttpStatus.BAD_REQUEST)
     }
 
     // 이벤트 상태 체크
     if(!eventCheck.status){
-      await this.historyModal.create({userId: ID, eventNum, remark:'이벤트가 종료되었습니다.', status: RewardStatus.Failed});
       throw new HttpException('이벤트가 종료되었습니다.', HttpStatus.BAD_REQUEST)
     }
 
@@ -189,13 +187,11 @@ export class AppService {
     const endAt = dayjs(eventCheck.endAt).format('YYYY-MM-DD');
     const today = dayjs(new Date()).format('YYYY-MM-DD');
     if(today < startAt || today > endAt){
-      await this.historyModal.create({userId: ID, eventNum, remark:'이벤트 기간이 아닙니다.', status: RewardStatus.Failed});
       throw new HttpException('이벤트 기간이 아닙니다.', HttpStatus.BAD_REQUEST)
     }
 
     // 보상 조건 충족 여부 체크
     
-
     // 중복 보상 요청 방지
     const historyCheck = await this.historyModal.findOne({userId: ID, eventNum, status: 'success'});
     if(historyCheck){
