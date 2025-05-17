@@ -3,9 +3,8 @@ import { Event, EventDocument } from './schemas/event.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Reward, RewardDocument } from './schemas/reward.schema';
-import { History, HistoryDocument } from './schemas/History.schema';
+import { History, HistoryDocument } from './schemas/history.schema';
 import { RewardStatus } from './config/variables';
-import { User, UserDocument } from './schemas/user.schema';
 import { RewardStrategy } from './interfaces/reward-strategy.interface';
 const dayjs = require('dayjs');
 const tz    = require('dayjs/plugin/timezone');
@@ -20,7 +19,6 @@ export class AppService {
     @InjectModel(Event.name) private eventModel: Model<EventDocument>,
     @InjectModel(Reward.name) private rewardModel: Model<RewardDocument>,
     @InjectModel(History.name) private historyModel: Model<HistoryDocument>,
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) {}
 
   // 이벤트 조회(USER)
@@ -216,9 +214,7 @@ export class AppService {
 
     await event.handle(ID, arrReward);
     
-    await this.historyModel.create({userId: ID, eventNum, remark:'보상 지급이 완료되었습니다.', status: RewardStatus.Success});
-
-    return historyCheck
+    return await this.historyModel.create({userId: ID, eventNum, remark:'보상 지급이 완료되었습니다.', status: RewardStatus.Success});
   }
 
   // 내 요청 이력보기

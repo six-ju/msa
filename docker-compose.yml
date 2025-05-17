@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./gateway-server
+      dockerfile: Dockerfile
+    container_name: msa-gateway
+    ports:
+      - '8000:8000'
+    environment:
+      - PORT=8000
+    restart: unless-stopped
+
+
+  auth:
+    build:
+      context: ./auth-server
+      dockerfile: Dockerfile
+    container_name: msa-auth
+    ports:
+      - '8001:8001'
+    environment:
+      - PORT=8001
+    restart: unless-stopped
+    depends_on:
+      - gateway
+
+  event:
+    build:
+      context: ./event-server
+      dockerfile: Dockerfile
+    container_name: msa-event
+    ports:
+      - '8002:8002'
+    environment:
+      - PORT=8002
+    restart: unless-stopped
+    depends_on:
+      - auth
+      - gateway
+
+networks:
+  default:
+    name: msa-network

@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventSchema } from './schemas/event.schema';
 import { RewardSchema } from './schemas/reward.schema';
-import { HistorySchema } from './schemas/History.schema';
+import { HistorySchema } from './schemas/history.schema';
 import { UserSchema } from './schemas/user.schema';
 import { DailyLoginStrategy } from './strategies/daily-login.strategy';
 import { WeeklyLoginStrategy } from './strategies/weekly-login.strategy';

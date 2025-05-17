@@ -7,6 +7,7 @@ import axios from 'axios';
 const dayjs = require('dayjs');
 const utc    = require('dayjs/plugin/utc');
 const tz    = require('dayjs/plugin/timezone');
+const dockerURL = process.env.IS_DOCKER === 'true' ? 'event:8002' : 'localhost:8002';
 
 dayjs.extend(utc);
 dayjs.extend(tz);
@@ -70,12 +71,12 @@ export class AppService {
 
   // 이벤트 조회(USER)
   async getEventForUser(): Promise<any>{
-    return await axios.get('http://localhost:8002/event')
+    return await axios.get(`http://${dockerURL}/event`)
   }
 
   // 이벤트 조회(ADMIN)
   async getEvent(): Promise<any>{
-    return await axios.get('http://localhost:8002/admin/event')
+    return await axios.get(`http://${dockerURL}/admin/event`)
   }
 
   // 이벤트 생성
@@ -90,7 +91,7 @@ export class AppService {
       ID
     } 
   
-    return await axios.post('http://localhost:8002/admin/event', event)
+    return await axios.post(`http://${dockerURL}/admin/event`, event)
   }
 
   // 이벤트 보상 추가
@@ -101,17 +102,17 @@ export class AppService {
       ID
     } 
   
-    return await axios.patch('http://localhost:8002/admin/event', event)
+    return await axios.patch(`http://${dockerURL}/admin/event`, event)
   }
 
   // 보상 조회(USER)
   async getRewardForUser(): Promise<any>{  
-    return await axios.get('http://localhost:8002/reward')
+    return await axios.get(`http://${dockerURL}/reward`)
   }
 
   // 보상 조회(ADMIN)
   async getReward(): Promise<any>{  
-    return await axios.get('http://localhost:8002/admin/reward')
+    return await axios.get(`http://${dockerURL}/admin/reward`)
   }
 
   // 보상 생성
@@ -120,7 +121,7 @@ export class AppService {
       name, amount, info, ID
     } 
   
-    return await axios.post('http://localhost:8002/admin/reward', reward)
+    return await axios.post(`http://${dockerURL}/admin/reward`, reward)
   }
 
   // 보상 요청
@@ -129,16 +130,16 @@ export class AppService {
       eventNum, ID
     } 
   
-    return await axios.post('http://localhost:8002/request', reward)
+    return await axios.post(`http://${dockerURL}/request`, reward)
   }
 
   // 내 요청 이력보기
   async requestUserHistoryById(ID:string): Promise<any>{
-    return await axios.get(`http://localhost:8002/request/history/${ID}`)
+    return await axios.get(`http://${dockerURL}/request/history/${ID}`)
   }
 
   // ADMIN 요청 이력보기
   async requestAdminHistoryById(): Promise<any>{
-    return await axios.get(`http://localhost:8002/admin/request/history`)
+    return await axios.get(`http://${dockerURL}/admin/request/history`)
   }
 }

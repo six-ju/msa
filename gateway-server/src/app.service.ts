@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+const dockerURL = process.env.IS_DOCKER === 'true' ? 'auth:8001' : 'localhost:8001';
 
 @Injectable()
 export class AppService {
   // 로그인
   async login(ID: string, PW: string): Promise<boolean> {
     try {
-      const result = await axios.post('http://localhost:8001/login', {
+      const result = await axios.post(`http://${dockerURL}/login`, {
         ID,
         PW,
       });
@@ -25,7 +26,7 @@ export class AppService {
     recommend: string,
   ): Promise<{ message: string }> {
     try {
-      const result = await axios.post('http://localhost:8001/signup', {
+      const result = await axios.post(`http://${dockerURL}/signup`, {
         ID,
         PW,
         role,
@@ -41,7 +42,7 @@ export class AppService {
   // 이벤트 조회(USER)
   async getEventForUser(accessToken: string): Promise<any> {
     try {
-      const result = await axios.get('http://localhost:8001/event',{
+      const result = await axios.get(`http://${dockerURL}/event`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -56,7 +57,7 @@ export class AppService {
   // 이벤트 조회(ADMIN)
   async getEvent(accessToken: string): Promise<any> {
     try {
-      const result = await axios.get('http://localhost:8001/admin/event',{
+      const result = await axios.get(`http://${dockerURL}/admin/event`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -80,7 +81,7 @@ export class AppService {
         endAt
       } 
 
-      const result = await axios.post('http://localhost:8001/admin/event',event, {
+      const result = await axios.post(`http://${dockerURL}/admin/event`,event, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -99,7 +100,7 @@ export class AppService {
         eventNum,
         reward
       }
-      const result = await axios.patch('http://localhost:8001/admin/event',info, {
+      const result = await axios.patch(`http://${dockerURL}/admin/event`,info, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -114,7 +115,7 @@ export class AppService {
   // 보상 조회(USER)
   async getRewardForUser(accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.get('http://localhost:8001/reward', {
+      const result = await axios.get(`http://${dockerURL}/reward`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -129,7 +130,7 @@ export class AppService {
   // 보상 조회(ADMIN)
   async getReward(accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.get('http://localhost:8001/admin/reward', {
+      const result = await axios.get(`http://${dockerURL}/admin/reward`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -148,7 +149,7 @@ export class AppService {
         name, amount, info
       } 
 
-      const result = await axios.post('http://localhost:8001/admin/reward',reward, {
+      const result = await axios.post(`http://${dockerURL}/admin/reward`,reward, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -163,7 +164,7 @@ export class AppService {
   // 보상 요청
   async requestReward(eventNum: number, accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.post('http://localhost:8001/request',{eventNum},{
+      const result = await axios.post(`http://${dockerURL}/request`,{eventNum},{
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -178,7 +179,7 @@ export class AppService {
   // 내 요청 이력보기
   async requestUserHistoryById(accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.get('http://localhost:8001/request/history',{
+      const result = await axios.get(`http://${dockerURL}/request/history`,{
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -193,7 +194,7 @@ export class AppService {
   // ADMIN 요청 이력보기
   async requestAdminHistoryById(accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.get('http://localhost:8001/admin/request/history',{
+      const result = await axios.get(`http://${dockerURL}/admin/request/history`,{
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
