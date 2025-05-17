@@ -26,7 +26,8 @@ export class AppController {
 
       return res.status(200).json({ message: '로그인 성공' });
     } catch (error) {
-      return res.status(401).json({ message: error.response.data.message });
+      console.log(error)
+      return res.status(401).json({ message: error.response?.data.message || '로그인 중 실패했습니다.'  });
     }
   }
 
@@ -218,7 +219,43 @@ export class AppController {
 
       return res.status(200).json(result)
     } catch (error) {
-      return res.status(400).json({message: error.response || '보상 요청 중 에러가 발생했습니다.'})
+      return res.status(400).json({message: error.response?.data.message || '보상 지급 중 에러가 발생했습니다.'})
+    }
+  }
+
+  // 내 요청 이력보기
+  @Get('/request/history')
+  async requestUserHistoryById(@Req() req, @Res() res){
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.requestUserHistoryById(accessToken);
+
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(400).json({message: error.response?.data.message || '내 이력 가져오는 중 에러가 발생했습니다.'})
+    }
+  }
+
+  // ADMIN 요청 이력보기
+  @Get('/admin/request/history')
+  async requestAdminHistoryById(@Req() req, @Res() res){
+    try {
+      const { accessToken } = req.cookies; 
+
+      if(!accessToken){
+        return res.status(401).json({ message: "로그인 먼저 해주세요."})
+      }
+
+      const result = await this.appService.requestAdminHistoryById(accessToken);
+
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(400).json({message: error.response?.data.message || '내 이력 가져오는 중 에러가 발생했습니다.'})
     }
   }
 }

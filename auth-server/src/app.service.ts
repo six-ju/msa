@@ -4,7 +4,13 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import axios from 'axios';
-import { Reward } from './schemas/reward.schema';
+const dayjs = require('dayjs');
+const utc    = require('dayjs/plugin/utc');
+const tz    = require('dayjs/plugin/timezone');
+
+dayjs.extend(utc);
+dayjs.extend(tz);
+dayjs.tz.setDefault('Asia/Seoul');
 
 @Injectable()
 export class AppService {
@@ -29,6 +35,13 @@ export class AppService {
     const role = findUser?.role;
     const payload = { ID, role };
     const token = this.jwtService.sign(payload);
+
+    //출석 체크
+    const loginAt = dayjs(findUser.loginAt).tz().format('YYYY-MM-DD')
+    const nowDate = new Date();
+    if(loginAt < nowDate || findUser.loginCount === 0){
+      await this.userModel.updateOne({ ID },{$inc:{loginCount : 1}})
+    }
 
     // 로그인 시간 업데이트
     await this.userModel.updateOne({ ID }, { loginAt: new Date() });
@@ -116,6 +129,16 @@ export class AppService {
       eventNum, ID
     } 
   
-    return await axios.post('http://localhost:8002/admin/request', reward)
+    return await axios.post('http://localhost:8002/request', reward)
+  }
+
+  // 내 요청 이력보기
+  async requestUserHistoryById(ID:string): Promise<any>{
+    return await axios.get(`http://localhost:8002/request/history/${ID}`)
+  }
+
+  // ADMIN 요청 이력보기
+  async requestAdminHistoryById(): Promise<any>{
+    return await axios.get(`http://localhost:8002/admin/request/history`)
   }
 }

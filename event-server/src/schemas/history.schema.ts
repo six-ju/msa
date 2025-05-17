@@ -20,7 +20,7 @@ export class History {
   @Prop({default: Date.now})
   createdAt: Date;
 
-  @Prop({ required: true })
+  @Prop({ default: 'SYSTEM' })
   createdBy: string;
 }
 

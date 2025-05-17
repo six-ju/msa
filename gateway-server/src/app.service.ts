@@ -163,7 +163,37 @@ export class AppService {
   // 보상 요청
   async requestReward(eventNum: number, accessToken: string): Promise<{ message: string }> {
     try {
-      const result = await axios.post('http://localhost:8001/request',eventNum,{
+      const result = await axios.post('http://localhost:8001/request',{eventNum},{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // 내 요청 이력보기
+  async requestUserHistoryById(accessToken: string): Promise<{ message: string }> {
+    try {
+      const result = await axios.get('http://localhost:8001/request/history',{
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      return result.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  // ADMIN 요청 이력보기
+  async requestAdminHistoryById(accessToken: string): Promise<{ message: string }> {
+    try {
+      const result = await axios.get('http://localhost:8001/admin/request/history',{
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

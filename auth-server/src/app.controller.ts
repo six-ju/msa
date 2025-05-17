@@ -170,11 +170,41 @@ export class AppController {
     try {
       const { ID } = req.user;
       const { eventNum } = body;
+
       await this.appService.requestReward(eventNum, ID);
 
       return res.status(200).json({message:'보상 받기 완료'})
     } catch (error) {
-      return res.status(400).json({ message: error.response?.data.message || '보상 요청 중 에러가 발생했습니다.' });
+      return res.status(400).json({ message: error.response?.data.message || '보상 지급 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // 내 요청 이력보기
+  @UseGuards(JwtAuthGuard)
+  @Get('/request/history')
+  async requestUserHistoryById(@Req() req, @Res() res) {
+    try {
+      const { ID } = req.user;
+
+      const result = await this.appService.requestUserHistoryById(ID);
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 지급 중 에러가 발생했습니다.' });
+    }
+  }
+
+  // ADMIN 요청 이력보기
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'OPERATOR', 'AUDITOR')
+  @Get('/admin/request/history')
+  async requestAdminHistoryById(@Req() req, @Res() res) {
+    try {
+      const result = await this.appService.requestAdminHistoryById();
+
+      return res.status(200).json(result.data)
+    } catch (error) {
+      return res.status(400).json({ message: error.response?.data.message || '보상 지급 중 에러가 발생했습니다.' });
     }
   }
 }
