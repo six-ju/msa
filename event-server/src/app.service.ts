@@ -4,7 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Reward, RewardDocument } from './schemas/reward.schema';
 import { History, HistoryDocument } from './schemas/History.schema';
-import { EventType, RewardStatus } from './config/variables';
+import { RewardStatus } from './config/variables';
 import { User, UserDocument } from './schemas/user.schema';
 import { RewardStrategy } from './interfaces/reward-strategy.interface';
 const dayjs = require('dayjs');
