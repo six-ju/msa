@@ -8,9 +8,9 @@ export class AppController {
 
   // 로그인
   @Post('/login')
-  async login(@Req() req, @Res() res) {
+  async login(@Body() body, @Res() res) {
     try {
-      const { ID, PW } = req.query;
+      const { ID, PW } = body;
 
       if (!ID || !PW) {
         return res.status(400).json({ message: '모두 입력해주세요.' });
@@ -33,9 +33,9 @@ export class AppController {
 
   // 회원가입
   @Post('/signup')
-  async signUp(@Req() req, @Res() res) {
+  async signUp(@Body() body, @Res() res) {
     try {
-      const { ID, PW, role, recommend } = req.query;
+      const { ID, PW, role, recommend } = body;
 
       if (!ID || !PW || !role) {
         return res.status(400).json({ message: '모두 입력해주세요.' });
