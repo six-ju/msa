@@ -173,7 +173,7 @@ export class AppController {
 
       await this.appService.requestReward(eventNum, ID);
 
-      return res.status(200).json({message:'보상 받기 완료'})
+      return res.status(200).json({message:'보상 지급 완료'})
     } catch (error) {
       return res.status(400).json({ message: error.response?.data.message || '보상 지급 중 에러가 발생했습니다.' });
     }
