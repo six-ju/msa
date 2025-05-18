@@ -2,14 +2,14 @@
 
 
 ## 🔖 목차
-1. 👤 소개  
-3. 🏛️ 아키텍처  
-4. 📁 디렉터리 구조  
-5. ⚙️ 설치·실행 
-6. 🧩 미션 
-7. 📡 API 명세  
+1. [👤 소개  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EC%86%8C%EA%B0%9C)   
+3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
+4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
+6. [🧩 미션 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
+7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
 8. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
-9. 💡 구현 중 겪은 고민 및 해결
+9. [💡 구현 중 겪은 고민 및 해결](https://github.com/six-ju/msa?tab=readme-ov-file#%EA%B5%AC%ED%98%84-%EC%A4%91-%EA%B2%AA%EC%9D%80-%EA%B3%A0%EB%AF%BC-%EB%B0%8F-%ED%95%B4%EA%B2%B0)
 ---
 
 ## 👤 소개
