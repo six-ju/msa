@@ -1,4 +1,89 @@
 
+
+
+## 🔖 목차
+1. 👤 소개  
+2. 🛠️ 기술 스택  
+3. 🏛️ 아키텍처  
+4. 📁 디렉터리 구조  
+5. ⚙️ 설치·실행  
+6. 📡 API 명세  
+7. 🔒 환경 변수  
+8. 🔒 구현 중 겪은 고민 및 해결
+---
+
+## 👤 소개
+- **이름**: 육준호  
+- **직무**: 백엔드 개발자  
+- **이메일**: yuk1479@naver.com
+
+
+
+## 🛠️ 기술 스택
+- **언어/프레임워크**: TypeScript, NestJS  
+- **DB**: MongoDB (Mongoose)  
+- **인증**: JWT  
+- **배포·운영**: Docker Compose  
+
+## 🏛️ 아키텍처
+1. Gateway: 공통 인증·라우팅  
+2. Auth: 로그인·토큰 발급  
+3. Event: 이벤트 및 보상 CRUD / 전략 패턴 
+
+## 📁 디렉터리 구조
+```plaintext
+/
+├─ gateway-server/
+│  ├─ src/
+│  └─ Dockerfile
+├─ auth-server/
+│  ├─ src/
+│  └─ Dockerfile
+├─ event-server/
+│  ├─ src/
+│  └─ Dockerfile
+└─ docker-compose.yml
+```
+## ⚙️ 설치·실행
+1.  레포지토리 클론 
+2. .env 파일 생성 & 환경 변수 설정
+3. `docker-compose up -d --build` 빌드 및 실행
+4. Postman
+
+## 📡 API 명세
+| method | URL | func | Req | Res |
+| --- | --- | --- | --- | --- |
+| POST | /signup | 회원가입 | { <br>ID: “test”, <br> PW: “1234”, <br> role: 'USER',  <br>recommend:'test1' <br>} | {"message": "회원가입을 성공적으로 완료했습니다."} |
+| POST | /login | 로그인| { <br>ID: “test”,  <br>PW: “1234” <br>} | { message: '로그인 성공' } |
+| POST | /admin/event | 이벤트 생성| { <br>name: “1일차 출석”,  <br>reward: “5”,  <br>status: 'true',  <br>eventType:'Daily',  <br>startAt:'2025-05-15',  <br>endAt:'2025-05-25' <br>} | {message:'이벤트 생성 완료'} |
+| POST | /admin/reward | 보상 생성| { <br>name: “데일리보상 1일차”,  <br>amount: “1000”,  <br>role: 'USER', <br> recommend:'test1' <br>} | {message:'보상 생성 완료'} |
+| GET | /admin/event | 이벤트 조회(ADMIN)| - | { <br> "_id": "6827289c6361da5b4203c5b6",<br> "number": 1, <br>"name":"추천인 3명 받기",<br> "reward": ["1"], <br>"startAt": "2025-05-15T00:00:00.000Z", <br>"endAt": "2025-05-25T00:00:00.000Z",<br>"status": true,<br>"eventType": "Recommend",<br>"createdBy": "test",<br>"updatedBy": "test",<br>"createdAt": "2025-05-16T11:59:24.613Z",<br>"updatedAt": "2025-05-16T11:59:24.613Z",<br>"__v": 0<br>}|
+| GET | /event | 이벤트 조회(USER)| - | {<br>"number": 1,<br>"name": "추천인 3명 받기",<br>"reward": ["1"],<br> "startAt": "2025-05-15",<br>"endAt": "2025-05-25"<br>}|
+| GET | /admin/reward | 보상 조회(ADMIN)| - | {<br>"number": 1,<br>"name": "돈뭉치",<br>"amount": 333333,<br>"info": "추천인 3명 받았을때 나가는 보상",<br>"createdAt": "2025-05-16T07:52:54.052Z",<br>"updatedAt": "2025-05-16T07:52:54.052Z",<br>"eventsName": ["추천인 3명 받기"] <br>}|
+| GET | /reward | 보상 조회(USER)| - |{<br>"number": 1,<br>"name": "돈뭉치",<br>"amount": 333333,<br>"eventPath": ["추천인 3명 받기"]<br>}|
+| PATCH | /admin/event | 이벤트 보상 추가| { <br>eventNum: “5”,  <br>reward: “6” <br>} |{message:'보상 추가 완료'}|
+| POST  | /request | 보상 요청| { <br>eventNum: “2” <br>} | {message:'보상 지급 완료'} |
+| GET | /request/history | 내 요청 이력 가져오기| - |{<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>}|
+| GET | /admin/request/history | 운영자 요청 이력 가져오기| - | {<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>},<br>{<br>"userId": "test",<br>"eventNum": "2",<br> "status": "FAILED",<br>"remark": "이미 보상을 받으셨습니다.",<br>"createdAt": "2025-05-16T12:31:52.114Z"<br> }|
+
+
+
+
+## 🔒 환경 변수
+- auth-sever
+```
+JWT_SECRET_KEY=iwantgonexon
+
+MONGODB_URL=mongodb+srv://yuk1479:ODQMU5ICjVAtDxlT@cluster0.m52xeps.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+```
+
+- event-sever
+```
+MONGODB_URL=mongodb+srv://yuk1479:ODQMU5ICjVAtDxlT@cluster0.m52xeps.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+```
+
 ## 구현 중 겪은 고민 및 해결
 
 1. **전역 Guard 등록 이슈**  
@@ -34,59 +119,5 @@
      `strategy` 전략 패턴을 사용함으로써 서비스 단에 코드가 단순해지며, 새로운 미션 추가시 전략 클래스만 작성하면 되므로 확장성과 유지보수가 좋아졌습니다.
 
 
-![Nexon 과제](https://img.shields.io/badge/Assignment-Nexon-blue) ![NestJS](https://img.shields.io/badge/Tech-NestJS-orange) ![Docker](https://img.shields.io/badge/DevOps-Docker-lightgrey)
 
 ---
-
-## 🔖 목차
-1. 👤 소개  
-2. 🚀 개요  
-3. 🛠️ 기술 스택  
-4. 🏛️ 아키텍처  
-5. 📁 디렉터리 구조  
-6. ⚙️ 설치·실행  
-7. 📡 API 명세  
-8. 🔒 환경 변수  
----
-
-## 👤 소개
-- **이름**: 육준호  
-- **직무**: 백엔드 개발자  
-- **연락처**: 010-9390-1479
-- **이메일**: yuk1479@naver.com
-
-
-## 🚀 개요
-- NestJS 기반 마이크로서비스 3종(gateway, auth, event)  
-- 이벤트 생성, 보상 정의, 유저 보상 요청, 관리자 및 감사자 확인 기능 포함
-
-## 🛠️ 기술 스택
-- **언어/프레임워크**: TypeScript, NestJS  
-- **DB**: MongoDB (Mongoose)  
-- **인증**: JWT  
-- **배포·운영**: Docker Compose  
-- **유틸**: dayjs, Axios
-
-## 🏛️ 아키텍처
-1. Gateway: 공통 인증·라우팅  
-2. Auth: 로그인·토큰 발급  
-3. Event: 이벤트 및 보상 CRUD / 전략 패턴 
-
-## 📁 디렉터리 구조
-```plaintext
-/
-├─ gateway-server/
-│  ├─ src/
-│  └─ Dockerfile
-├─ auth-server/
-│  ├─ src/
-│  └─ Dockerfile
-├─ event-server/
-│  ├─ src/
-│  └─ Dockerfile
-└─ docker-compose.yml
-```
-## 📡 API 명세
-
-## 🔒 환경 변수
-
