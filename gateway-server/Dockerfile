@@ -9,11 +9,11 @@ ENV IS_DOCKER=true
 
 # builder 스테이지
 COPY package*.json ./
-RUN npm ci         # dev+prod 설치
+RUN npm install        # dev+prod 설치
 
 # 2) 의존성만 먼저 복사해 설치 (빌드 캐시 활용)
 COPY package*.json ./
-RUN npm ci --production
+RUN npm install --production
 
 # 3) 소스 복사 & 빌드 (TypeScript면 build 명령어 추가)
 COPY . .

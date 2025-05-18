@@ -1,15 +1,12 @@
 import { Body, Controller, Get, Patch, Post, Render, Req, Res, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
 import { USER_ROLES } from './config/variables';
-import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   // 로그인
-  @UseGuards(ThrottlerGuard)
-  @Throttle({ default: { limit: 1, ttl: 5000 } })
   @Post('/login')
   async login(@Body() body, @Res() res) {
     try {
