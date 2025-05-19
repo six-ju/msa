@@ -35,11 +35,12 @@
 ├─ event-server/
 │  ├─ src/
 │  └─ Dockerfile
+├─ README.md
 └─ docker-compose.yml
 ```
 ## ⚙️ 설치·실행
 1.  레포지토리 클론 
-2. .env 파일 생성 & 환경 변수 설정
+2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
 
