@@ -6,6 +6,7 @@
 3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
 4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
+6. [🎁 보상](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
 6. [🧩 미션 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
 7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
 8. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
@@ -34,35 +35,128 @@
 ├─ event-server/
 │  ├─ src/
 │  └─ Dockerfile
+├─ README.md
 └─ docker-compose.yml
 ```
 ## ⚙️ 설치·실행
 1.  레포지토리 클론 
-2. .env 파일 생성 & 환경 변수 설정
+2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
 
+## 🎁 보상
+
+```json
+{
+  "name": “돈뭉치”,
+  "amount": “33333”,
+  "info": "추천인 3명 받았을시 지급"
+}
+```
+```json
+{
+  "name": “데일리보상 1일차”,
+  "amount": “1000”,
+  "info": "데일리보상 1일차"
+}
+```
+```json
+{
+  "name": “데일리보상 7일차”,
+  "amount": “7000”,
+  "info": "데일리보상 7일차"
+}
+```
+```json
+{
+  "name": “데일리보상 30일차”,
+  "amount": “30000”,
+  "info": "데일리보상 30일차"
+}
+```
+```json
+{
+  "name": “티끌모아태산”,
+  "amount": “77777”,
+  "info": "추천인 3명 받았을시 지급"
+}
+```
+```json
+{
+  "name": “운영자 손길”,
+  "amount": “100000”,
+  "info": "운영자의 선물"
+}
+```
 ## 🧩 미션
 - 추천인 3명 받기 (1번)(eventType : Recommend)
+```json
+{
+  "name": "추천인 3명 받기",
+  "reward": "1",
+  "status": "true",
+  "eventType": "Recommend",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 첫 로그인 기념 (2번)(eventType : Daily)
+```json
+{
+  "name": "1일차 출석",
+  "reward": "2",
+  "status": "true",
+  "eventType": "Daily",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 일주일 출석 완료 (3번)(eventType : Weekly)
+```json
+{
+  "name": "일주일 출석",
+  "reward": "3",
+  "status": "true",
+  "eventType": "Weekly",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 한달 출석 완료 (4번)(eventType : Monthly)
+```json
+{
+  "name": "한달 출석 완료",
+  "reward": "4",
+  "status": "true",
+  "eventType": "Monthly",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 티끌 모아 태산 (5번)(eventType : Money)
-
+```json
+{
+  "name": "티끌 모아 태산",
+  "reward": "5",
+  "status": "true",
+  "eventType": "Money",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 ## 📡 API 명세
 
 > **POST / PATCH 요청 시**  
 > `Content-Type: application/x-www-form-urlencoded`  
 
->  1. 회원가입시 `test1 ~ test9 `까지 존재하는 아이디  
->  2. 이벤트 생성은 가능하나 전략 클래스가 존재하지 않으므로 보상지급 불가
+>  1. 이벤트 생성은 가능하나 전략 클래스가 존재하지 않으므로 보상지급 불가
 
 | method | URL | func | Req | Res |
 | --- | --- | --- | --- | --- |
 | POST | /signup | 회원가입 | { <br>ID: “test”, <br> PW: “1234”, <br> role: 'USER',  <br>recommend:'test1' <br>} | {"message": "회원가입을 성공적으로 완료했습니다."} |
 | POST | /login | 로그인| { <br>ID: “test”,  <br>PW: “1234” <br>} | { message: '로그인 성공' } |
 | POST | /admin/event | 이벤트 생성| { <br>name: “1일차 출석”,  <br>reward: “5”,  <br>status: 'true',  <br>eventType:'Daily',  <br>startAt:'2025-05-15',  <br>endAt:'2025-05-25' <br>} | {message:'이벤트 생성 완료'} |
-| POST | /admin/reward | 보상 생성| { <br>name: “데일리보상 1일차”,  <br>amount: “1000”,  <br>role: 'USER', <br> recommend:'test1' <br>} | {message:'보상 생성 완료'} |
+| POST | /admin/reward | 보상 생성| { <br>name: “데일리보상 1일차”,  <br>amount: “1000”,  <br>info: '첫날 로그인시 요청가능' <br>} | {message:'보상 생성 완료'} |
 | GET | /admin/event | 이벤트 조회(ADMIN)| - | { <br> "_id": "6827289c6361da5b4203c5b6",<br> "number": 1, <br>"name":"추천인 3명 받기",<br> "reward": ["1"], <br>"startAt": "2025-05-15T00:00:00.000Z", <br>"endAt": "2025-05-25T00:00:00.000Z",<br>"status": true,<br>"eventType": "Recommend",<br>"createdBy": "test",<br>"updatedBy": "test",<br>"createdAt": "2025-05-16T11:59:24.613Z",<br>"updatedAt": "2025-05-16T11:59:24.613Z",<br>"__v": 0<br>}|
 | GET | /event | 이벤트 조회(USER)| - | {<br>"number": 1,<br>"name": "추천인 3명 받기",<br>"reward": ["1"],<br> "startAt": "2025-05-15",<br>"endAt": "2025-05-25"<br>}|
 | GET | /admin/reward | 보상 조회(ADMIN)| - | {<br>"number": 1,<br>"name": "돈뭉치",<br>"amount": 333333,<br>"info": "추천인 3명 받았을때 나가는 보상",<br>"createdAt": "2025-05-16T07:52:54.052Z",<br>"updatedAt": "2025-05-16T07:52:54.052Z",<br>"eventsName": ["추천인 3명 받기"] <br>}|
@@ -73,7 +167,20 @@
 | GET | /admin/request/history | 운영자 요청 이력 가져오기| - | {<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>},<br>{<br>"userId": "test",<br>"eventNum": "2",<br> "status": "FAILED",<br>"remark": "이미 보상을 받으셨습니다.",<br>"createdAt": "2025-05-16T12:31:52.114Z"<br> }|
 
 
+## 🔒 환경 변수
+- auth-sever
+```
+JWT_SECRET_KEY=iwantgonexon
 
+MONGODB_URL= 당사 URL 작성
+
+```
+
+- event-sever
+```
+MONGODB_URL= 당사 URL 작성
+
+```
 
 
 
