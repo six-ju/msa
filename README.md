@@ -32,9 +32,11 @@
 │  └─ Dockerfile
 ├─ auth-server/
 │  ├─ src/
+│  ├─ .env (추가 필수)
 │  └─ Dockerfile
 ├─ event-server/
 │  ├─ src/
+│  ├─ .env (추가 필수)
 │  └─ Dockerfile
 ├─ README.md
 └─ docker-compose.yml
