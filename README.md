@@ -148,8 +148,7 @@
 > **POST / PATCH 요청 시**  
 > `Content-Type: application/x-www-form-urlencoded`  
 
->  1. 회원가입시 `test1 ~ test9 `까지 존재하는 아이디  
->  2. 이벤트 생성은 가능하나 전략 클래스가 존재하지 않으므로 보상지급 불가
+>  1. 이벤트 생성은 가능하나 전략 클래스가 존재하지 않으므로 보상지급 불가
 
 | method | URL | func | Req | Res |
 | --- | --- | --- | --- | --- |
