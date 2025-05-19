@@ -1,4 +1,3 @@
-# 예: service-auth/Dockerfile
 FROM node:18-alpine
 
 # 1) 작업 디렉토리 설정
