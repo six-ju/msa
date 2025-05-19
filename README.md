@@ -6,6 +6,7 @@
 3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
 4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
+6. [🎁 보상](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
 6. [🧩 미션 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
 7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
 8. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
@@ -42,13 +43,106 @@
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
 
+## 🎁 보상
+
+```json
+{
+  "name": “돈뭉치”,
+  "amount": “33333”,
+  "info": "추천인 3명 받았을시 지급"
+}
+```
+```json
+{
+  "name": “데일리보상 1일차”,
+  "amount": “1000”,
+  "info": "데일리보상 1일차"
+}
+```
+```json
+{
+  "name": “데일리보상 7일차”,
+  "amount": “7000”,
+  "info": "데일리보상 7일차"
+}
+```
+```json
+{
+  "name": “데일리보상 30일차”,
+  "amount": “30000”,
+  "info": "데일리보상 30일차"
+}
+```
+```json
+{
+  "name": “티끌모아태산”,
+  "amount": “77777”,
+  "info": "추천인 3명 받았을시 지급"
+}
+```
+```json
+{
+  "name": “운영자 손길”,
+  "amount": “100000”,
+  "info": "운영자의 선물"
+}
+```
 ## 🧩 미션
 - 추천인 3명 받기 (1번)(eventType : Recommend)
+```json
+{
+  "name": "추천인 3명 받기",
+  "reward": "1",
+  "status": "true",
+  "eventType": "Recommend",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 첫 로그인 기념 (2번)(eventType : Daily)
+```json
+{
+  "name": "1일차 출석",
+  "reward": "2",
+  "status": "true",
+  "eventType": "Daily",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 일주일 출석 완료 (3번)(eventType : Weekly)
+```json
+{
+  "name": "일주일 출석",
+  "reward": "3",
+  "status": "true",
+  "eventType": "Weekly",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 한달 출석 완료 (4번)(eventType : Monthly)
+```json
+{
+  "name": "한달 출석 완료",
+  "reward": "4",
+  "status": "true",
+  "eventType": "Monthly",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 - 티끌 모아 태산 (5번)(eventType : Money)
-
+```json
+{
+  "name": "티끌 모아 태산",
+  "reward": "5",
+  "status": "true",
+  "eventType": "Money",
+  "startAt": "2025-05-15",
+  "endAt": "2025-05-25"
+}
+```
 ## 📡 API 명세
 
 > **POST / PATCH 요청 시**  
