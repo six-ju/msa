@@ -6,7 +6,7 @@
 3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
 4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
-6. [🎁 회원가입 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
+6. [🎁 회원가입 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EC%84%A4%EA%B3%84)
 7. [🎁 보상 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
 6. [🧩 이벤트 설계 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
 7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
@@ -32,9 +32,11 @@
 │  └─ Dockerfile
 ├─ auth-server/
 │  ├─ src/
+│  ├─ .env (추가 필수)
 │  └─ Dockerfile
 ├─ event-server/
 │  ├─ src/
+│  ├─ .env (추가 필수)
 │  └─ Dockerfile
 ├─ README.md
 └─ docker-compose.yml
@@ -44,7 +46,42 @@
 2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
-## 🎁 보상 설계
+## 🎁 회원가입 설계
+> 1. 추천인은 ID 입력하면 됩니다.  
+> 2. 권한은 대문자로 입력하시면 됩니다.
+
+```json
+{
+  "ID": “user1”,
+  "PW": “1234”,
+  "role": "USER"
+  "recommend": ""
+}
+```
+```json
+{
+  "ID": “admin”,
+  "PW": “1234”,
+  "role": "ADMIN"
+  "recommend": "user1"
+}
+```
+```json
+{
+  "ID": “auditor”,
+  "PW": “1234”,
+  "role": "AUDITOR"
+  "recommend": "user1"
+}
+```
+```json
+{
+  "ID": “operator”,
+  "PW": “1234”,
+  "role": "OPERATOR"
+  "recommend": "user1"
+}
+```
 
 ## 🎁 보상 설계
 
