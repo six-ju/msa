@@ -73,7 +73,20 @@
 | GET | /admin/request/history | 운영자 요청 이력 가져오기| - | {<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>},<br>{<br>"userId": "test",<br>"eventNum": "2",<br> "status": "FAILED",<br>"remark": "이미 보상을 받으셨습니다.",<br>"createdAt": "2025-05-16T12:31:52.114Z"<br> }|
 
 
+## 🔒 환경 변수
+- auth-sever
+```
+JWT_SECRET_KEY=iwantgonexon
 
+MONGODB_URL=
+
+```
+
+- event-sever
+```
+MONGODB_URL=
+
+```
 
 
 
