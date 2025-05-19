@@ -26,7 +26,6 @@ export class AppController {
 
       return res.status(200).json({ message: '로그인 성공' });
     } catch (error) {
-      console.log(error)
       return res.status(401).json({ message: error.response?.data.message || '로그인 중 실패했습니다.'  });
     }
   }
