@@ -78,13 +78,13 @@
 ```
 JWT_SECRET_KEY=iwantgonexon
 
-MONGODB_URL=
+MONGODB_URL= 당사 URL 작성
 
 ```
 
 - event-sever
 ```
-MONGODB_URL=
+MONGODB_URL= 당사 URL 작성
 
 ```
 
