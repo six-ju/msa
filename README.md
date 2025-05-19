@@ -62,7 +62,7 @@
 | POST | /signup | 회원가입 | { <br>ID: “test”, <br> PW: “1234”, <br> role: 'USER',  <br>recommend:'test1' <br>} | {"message": "회원가입을 성공적으로 완료했습니다."} |
 | POST | /login | 로그인| { <br>ID: “test”,  <br>PW: “1234” <br>} | { message: '로그인 성공' } |
 | POST | /admin/event | 이벤트 생성| { <br>name: “1일차 출석”,  <br>reward: “5”,  <br>status: 'true',  <br>eventType:'Daily',  <br>startAt:'2025-05-15',  <br>endAt:'2025-05-25' <br>} | {message:'이벤트 생성 완료'} |
-| POST | /admin/reward | 보상 생성| { <br>name: “데일리보상 1일차”,  <br>amount: “1000”,  <br>role: 'USER', <br> recommend:'test1' <br>} | {message:'보상 생성 완료'} |
+| POST | /admin/reward | 보상 생성| { <br>name: “데일리보상 1일차”,  <br>amount: “1000”,  <br>info: '첫날 로그인시 요청가능' <br>} | {message:'보상 생성 완료'} |
 | GET | /admin/event | 이벤트 조회(ADMIN)| - | { <br> "_id": "6827289c6361da5b4203c5b6",<br> "number": 1, <br>"name":"추천인 3명 받기",<br> "reward": ["1"], <br>"startAt": "2025-05-15T00:00:00.000Z", <br>"endAt": "2025-05-25T00:00:00.000Z",<br>"status": true,<br>"eventType": "Recommend",<br>"createdBy": "test",<br>"updatedBy": "test",<br>"createdAt": "2025-05-16T11:59:24.613Z",<br>"updatedAt": "2025-05-16T11:59:24.613Z",<br>"__v": 0<br>}|
 | GET | /event | 이벤트 조회(USER)| - | {<br>"number": 1,<br>"name": "추천인 3명 받기",<br>"reward": ["1"],<br> "startAt": "2025-05-15",<br>"endAt": "2025-05-25"<br>}|
 | GET | /admin/reward | 보상 조회(ADMIN)| - | {<br>"number": 1,<br>"name": "돈뭉치",<br>"amount": 333333,<br>"info": "추천인 3명 받았을때 나가는 보상",<br>"createdAt": "2025-05-16T07:52:54.052Z",<br>"updatedAt": "2025-05-16T07:52:54.052Z",<br>"eventsName": ["추천인 3명 받기"] <br>}|
