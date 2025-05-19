@@ -6,8 +6,9 @@
 3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
 4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
 5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
-6. [🎁 보상](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
-6. [🧩 미션 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
+6. [🎁 회원가입 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
+7. [🎁 보상 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
+6. [🧩 이벤트 설계 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
 7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
 8. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
 9. [💡 구현 중 겪은 고민 및 해결](https://github.com/six-ju/msa?tab=readme-ov-file#%EA%B5%AC%ED%98%84-%EC%A4%91-%EA%B2%AA%EC%9D%80-%EA%B3%A0%EB%AF%BC-%EB%B0%8F-%ED%95%B4%EA%B2%B0)
@@ -43,8 +44,9 @@
 2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
+## 🎁 보상 설계
 
-## 🎁 보상
+## 🎁 보상 설계
 
 ```json
 {
@@ -88,7 +90,26 @@
   "info": "운영자의 선물"
 }
 ```
-## 🧩 미션
+## 🧩 이벤트 설계
+1. **이벤트 존재 여부**  
+   - DB에 eventNum이 있는지 확인
+
+2. **이벤트 활성 상태**  
+   - `status === true` 인지 확인
+
+3. **이벤트 기간 체크**  
+   - `today < startAt || today > endAt` 인지 확인
+
+4. **중복 요청 방지**  
+   - 이미 보상을 요청했는지(`History` 모델) 확인
+
+5. **이벤트 유형별 충족 요건**  
+   - **Recommend**: 추천인 수가 `n`명 이상이어야 지급  
+   - **Daily**: 첫 로그인시 지급 가능
+   - **Weekly**: 7번 로그인시 지급 가능
+   - **Monthly**: 30번 로그인시 지급 가능
+   - **Money**: 특정 금액만큼 돈이 모였으면 지급
+
 - 추천인 3명 받기 (1번)(eventType : Recommend)
 ```json
 {
