@@ -75,20 +75,7 @@
 
 
 
-## 🔒 환경 변수
-- auth-sever
-```
-JWT_SECRET_KEY=iwantgonexon
 
-MONGODB_URL=mongodb+srv://yuk1479:ODQMU5ICjVAtDxlT@cluster0.m52xeps.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-```
-
-- event-sever
-```
-MONGODB_URL=mongodb+srv://yuk1479:ODQMU5ICjVAtDxlT@cluster0.m52xeps.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-```
 
 ## 💡구현 중 겪은 고민 및 해결
 
