@@ -44,7 +44,42 @@
 2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
-## 🎁 보상 설계
+## 🎁 회원가입 설계
+> 1. 추천인은 ID 입력하면 됩니다.  
+> 2. 권한은 대문자로 입력하시면 됩니다.
+
+```json
+{
+  "ID": “user1”,
+  "PW": “1234”,
+  "role": "USER"
+  "recommend": ""
+}
+```
+```json
+{
+  "ID": “admin”,
+  "PW": “1234”,
+  "role": "ADMIN"
+  "recommend": "user1"
+}
+```
+```json
+{
+  "ID": “auditor”,
+  "PW": “1234”,
+  "role": "AUDITOR"
+  "recommend": "user1"
+}
+```
+```json
+{
+  "ID": “operator”,
+  "PW": “1234”,
+  "role": "OPERATOR"
+  "recommend": "user1"
+}
+```
 
 ## 🎁 보상 설계
 
