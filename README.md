@@ -3,15 +3,15 @@
 
 ## 🔖 목차
 1. [👤 소개  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EC%86%8C%EA%B0%9C)   
-3. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
-4. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
-5. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
+2. [🏛️ 아키텍처 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98)
+3. [📁 디렉터리 구조  ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%94%94%EB%A0%89%ED%84%B0%EB%A6%AC-%EA%B5%AC%EC%A1%B0)
+4. [⚙️ 설치·실행 ](https://github.com/six-ju/msa?tab=readme-ov-file#%EF%B8%8F-%EC%84%A4%EC%B9%98%EC%8B%A4%ED%96%89)
+5. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
 6. [🎁 회원가입 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EC%84%A4%EA%B3%84)
 7. [🎁 보상 설계](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%B3%B4%EC%83%81)
-6. [🧩 이벤트 설계 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
-7. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
-8. [🔒 환경 변수 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%ED%99%98%EA%B2%BD-%EB%B3%80%EC%88%98)   
-9. [💡 구현 중 겪은 고민 및 해결](https://github.com/six-ju/msa?tab=readme-ov-file#%EA%B5%AC%ED%98%84-%EC%A4%91-%EA%B2%AA%EC%9D%80-%EA%B3%A0%EB%AF%BC-%EB%B0%8F-%ED%95%B4%EA%B2%B0)
+8. [🧩 이벤트 설계 ](https://github.com/six-ju/msa?tab=readme-ov-file#-%EB%AF%B8%EC%85%98)
+9. [📡 API 명세  ](https://github.com/six-ju/msa?tab=readme-ov-file#-api-%EB%AA%85%EC%84%B8)
+10. [💡 구현 중 겪은 고민 및 해결](https://github.com/six-ju/msa?tab=readme-ov-file#%EA%B5%AC%ED%98%84-%EC%A4%91-%EA%B2%AA%EC%9D%80-%EA%B3%A0%EB%AF%BC-%EB%B0%8F-%ED%95%B4%EA%B2%B0)
 ---
 
 ## 👤 소개
@@ -46,6 +46,21 @@
 2. .env 파일 생성(auth & event 서버) & 환경 변수 설정
 3. `docker-compose up -d --build` 빌드 및 실행
 4. Postman
+
+## 🔒 환경 변수
+- auth-sever
+```
+JWT_SECRET_KEY=iwantgonexon
+
+MONGODB_URL= 당사 URL 작성
+```
+
+- event-sever
+```
+MONGODB_URL= 당사 URL 작성
+```
+
+
 ## 🎁 회원가입 설계
 > 1. 추천인은 ID 입력하면 됩니다.  
 > 2. 권한은 대문자로 입력하시면 됩니다.
@@ -223,22 +238,6 @@
 | POST  | /request | 보상 요청| { <br>eventNum: “2” <br>} | {message:'보상 지급 완료'} |
 | GET | /request/history | 내 요청 이력 가져오기| - |{<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>}|
 | GET | /admin/request/history | 운영자 요청 이력 가져오기| - | {<br>"userId": "test",<br>"eventNum": "2",<br>"status": "SUCCESS",<br>"remark": "보상 지급이 완료되었습니다.",<br>"createdAt": "2025-05-16T12:31:08.697Z"<br>},<br>{<br>"userId": "test",<br>"eventNum": "2",<br> "status": "FAILED",<br>"remark": "이미 보상을 받으셨습니다.",<br>"createdAt": "2025-05-16T12:31:52.114Z"<br> }|
-
-
-## 🔒 환경 변수
-- auth-sever
-```
-JWT_SECRET_KEY=iwantgonexon
-
-MONGODB_URL= 당사 URL 작성
-
-```
-
-- event-sever
-```
-MONGODB_URL= 당사 URL 작성
-
-```
 
 
 
