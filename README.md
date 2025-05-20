@@ -20,6 +20,8 @@
 - **이메일**: yuk1479@naver.com
 
 ## 🏛️ 아키텍처
+![플로워](https://github.com/user-attachments/assets/7c7d51a7-6aee-4515-ac22-9669da32aefb)
+
 1. Gateway: 공통 인증·라우팅  
 2. Auth: 로그인·토큰 발급  
 3. Event: 이벤트 및 보상 CRUD / 전략 패턴 
