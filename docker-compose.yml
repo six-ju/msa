@@ -47,3 +47,4 @@ services:
 networks:
   default:
     name: msa-network
+ 

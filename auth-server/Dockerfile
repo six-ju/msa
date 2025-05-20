@@ -19,3 +19,4 @@ CMD ["node", "dist/main.js"]
 
 # 5) (선택) 내부 포트 노출
 EXPOSE 8000
+ 
